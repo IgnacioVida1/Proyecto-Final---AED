@@ -1,0 +1,3 @@
+C:/Users/ignac/Desktop/Proyecto AED/cmake-build-debug/CMakeFiles/Proyecto_AED.dir
+C:/Users/ignac/Desktop/Proyecto AED/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/ignac/Desktop/Proyecto AED/cmake-build-debug/CMakeFiles/rebuild_cache.dir

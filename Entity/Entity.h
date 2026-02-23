@@ -1,0 +1,38 @@
+//
+// Created by ignac on 9/02/2026.
+//
+
+#ifndef ENTITY_H
+#define ENTITY_H
+
+#include "../Quad/Point.h"
+#include "../Quad/Rect.h"
+
+class Entity {
+    public:
+    virtual ~Entity() = default;
+
+    Point position;
+    float radius;
+    bool active;
+    int lastCollisionFrame;
+    int id;
+
+    bool justAte = false;
+    float ateTimer = 0.0f;
+    float pulseScale = 1.0f;
+
+    float rotationAngle = 0.0f;
+    float targetScale = 1.0f;
+
+    virtual Rect getBoundingBox() const {
+        return {position.x - radius, position.y - radius, radius * 2, radius * 2};
+    }
+
+    Entity() : position(Point(0, 0)), radius(10.0f), active(true), id(0) {}
+
+};
+
+
+
+#endif //ENTITY_H
