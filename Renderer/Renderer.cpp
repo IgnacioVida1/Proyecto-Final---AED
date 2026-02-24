@@ -115,6 +115,7 @@ void Renderer::drawText(const std::string& text, int x, int y, Color c, bool sma
         if (!f) { return; }
     }
 
+
     SDL_Surface* surface = TTF_RenderText_Solid(f, text.c_str(),
         SDL_Color{c.r, c.g, c.b, c.a});
 
@@ -211,6 +212,10 @@ void Renderer::drawPanel(int x, int y, int w, int h, Color bgColor, Color border
 }
 
 void Renderer::drawSlider(int x, int y, int w, float value, const std::string& label) {
+
+    if (value < 0) value = 0;
+    if (value > 1) value = 1;
+
     drawText(label, x - 150, y - 5, Color::White(), false);
 
     SDL_SetRenderDrawColor(renderer, 50, 50, 50, 255);
@@ -302,25 +307,21 @@ void Renderer::renderOptionsMenu(Game* game, int selectedOption) {
 
     auto& settings = game->getSettings();
     int startY = 150;
-    int spacing = 60;
-
+    int spacing = 70;
     drawPanel(150, startY - 30, 700, spacing * 6 + 30, Color(20, 20, 30, 200), Color::White());
 
     Color optColor = (selectedOption == 0) ? Color::Yellow() : Color::White();
-    drawText("VEL. JUGADOR: " + std::to_string((int)settings.playerSpeed),
+    drawText("VEL. JUGADOR: " + std::to_string(settings.playerSpeed),
              200, startY, optColor, false);
     drawSlider(500, startY, 200, settings.playerSpeed / 5.0f, "");
 
-    optColor = (selectedOption == 3) ? Color::Yellow() : Color::White();
-    drawText("VEL. BOTS: " + std::to_string((int)settings.botSpeed),
+    optColor = (selectedOption == 1) ? Color::Yellow() : Color::White();
+    drawText("VEL. BOTS: " + std::to_string(settings.botSpeed),
              200, startY + spacing, optColor, false);
-    drawSlider(500, startY + spacing, 200, settings.botSpeed / 4.0f, "");
+    drawSlider(500, startY + spacing, 200, settings.botSpeed / 5.0f, "");
 
 
-    drawButton("GUARDAR", width/2 - 150, height - 80, false, Color::Green());
-    drawButton("CANCELAR", width/2 + 50, height - 80, false, Color::Red());
-
-    drawText("ESC para volver sin guardar", 10, height - 30, Color::White(), true);
+    drawText("ESC para volver sin guardar || ENTER para guardar", 10, height - 30, Color::White(), true);
 
     present();
 }
@@ -613,13 +614,6 @@ void Renderer::renderEntity(GameEntity* entity) {
 
     fillRect(screenPos.x, screenPos.y, screenSize, screenSize, color1);
     drawRect(screenPos.x, screenPos.y, screenSize, screenSize, color2);
-
-    if (entity->type == EntityType::PLAYER) {
-        float glow = 1.0f + sin(SDL_GetTicks() * 0.005f) * 0.2f;
-        drawRect(screenPos.x - 2 * glow, screenPos.y - 2 * glow,
-                screenSize + 4 * glow, screenSize + 4 * glow,
-                Color(0, 255, 0, 100));
-    }
 
     if (entity->type == EntityType::PLAYER) {
         drawRect(screenPos.x - 1, screenPos.y - 1,

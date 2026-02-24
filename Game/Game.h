@@ -14,7 +14,7 @@
 struct GameSettings {
     int totalBots = 31;
     int totalPellets = 7500;
-    float playerSpeed = 3.0f;
+    float playerSpeed = 2.0f;
     float botSpeed = 2.0f;
     bool showData = false;
     bool showQuad = false;
@@ -50,9 +50,6 @@ class Game {
     int pelletsEaten = 0;
     int botsEaten = 0;
     int playerDeaths = 0;
-
-    int total_bots;
-    int total_pellets;
 
     float gameOverTimer = 0.0f;
     float gameOverDelay = GAME_OVER_DELAY;

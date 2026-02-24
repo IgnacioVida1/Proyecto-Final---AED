@@ -111,43 +111,47 @@ int main(int argc, char* argv[]) {
 
                     case GameState::MENU_OPTIONS:
                         if (event.key.keysym.sym == SDLK_UP) {
-                            selectedOptions = (selectedOptions - 1 + 6) % 6;
+                            selectedOptions = (selectedOptions - 1 + 2) % 2;
                         }
                         else if (event.key.keysym.sym == SDLK_DOWN) {
-                            selectedOptions = (selectedOptions + 1) % 6;
+                            selectedOptions = (selectedOptions + 1) % 2;
                         }
                         else if (event.key.keysym.sym == SDLK_LEFT) {
                             auto& settings = game.getSettings();
                             switch (selectedOptions) {
                                 case 0:
-                                    if (settings.totalBots > 5)
-                                        settings.totalBots -= 5;
-                                    break;
+                                    if (settings.playerSpeed > 1.0f) {
+                                        settings.playerSpeed -= 0.1f;
+                                        if (settings.playerSpeed < 1.0f)
+                                            settings.playerSpeed = 1.0f;
+                                    }
+                                break;
                                 case 1:
-                                    if (settings.totalPellets > 500)
-                                        settings.totalPellets -= 500;
-                                    break;
-                                case 2:
-                                    if (settings.playerSpeed > 1.0f)
-                                        settings.playerSpeed -= 0.5f;
-                                    break;
-                                case 3:
-                                    if (settings.botSpeed > 0.5f)
-                                        settings.botSpeed -= 0.5f;
+                                    if (settings.botSpeed > 1.0f) {
+                                        settings.botSpeed -= 0.1f;
+                                        if (settings.botSpeed < 1.0f)
+                                            settings.botSpeed = 1.0f;
+                                    }
                                     break;
                             }
                         }
                         else if (event.key.keysym.sym == SDLK_RIGHT) {
                             auto& settings = game.getSettings();
                             switch (selectedOptions) {
-                                case 0: // Velocidad jugador
-                                    if (settings.playerSpeed < 8.0f)
-                                        settings.playerSpeed += 0.5f;
-                                    break;
-                                case 1: // Velocidad bots
-                                    if (settings.botSpeed < 6.0f)
-                                        settings.botSpeed += 0.5f;
-                                    break;
+                                case 0:
+                                    if (settings.playerSpeed < 5.0f) {
+                                        settings.playerSpeed += 0.1f;
+                                        if (settings.playerSpeed > 5.0f)
+                                            settings.playerSpeed = 5.0f;
+                                    }
+                                break;
+                                case 1:
+                                    if (settings.botSpeed < 5.0f) {
+                                        settings.botSpeed += 0.1f;
+                                        if (settings.botSpeed > 5.0f)
+                                            settings.botSpeed = 5.0f;
+                                    }
+                                break;
                             }
                         }
                         else if (event.key.keysym.sym == SDLK_RETURN ||

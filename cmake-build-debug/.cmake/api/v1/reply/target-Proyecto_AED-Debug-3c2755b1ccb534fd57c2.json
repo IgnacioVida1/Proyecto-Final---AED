@@ -72,11 +72,11 @@
 			[
 				{
 					"backtrace" : 4,
-					"path" : "C:/librerias/x86_64-w64-mingw32_SDL2/include"
+					"path" : "C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include"
 				},
 				{
 					"backtrace" : 5,
-					"path" : "C:/librerias/x86_64-w64-mingw32_SDL2/include/SDL2"
+					"path" : "C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2"
 				}
 			],
 			"language" : "CXX",
@@ -116,7 +116,7 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-LC:\\librerias\\x86_64-w64-mingw32_SDL2\\lib",
+				"fragment" : "-LC:\\Users\\ignac\\Desktop\\PROYEC~1\\Libs\\X86_64~1\\lib",
 				"role" : "libraryPath"
 			},
 			{
@@ -141,7 +141,7 @@
 			},
 			{
 				"backtrace" : 3,
-				"fragment" : "C:\\librerias\\x86_64-w64-mingw32_SDL2\\lib\\libSDL2.dll.a",
+				"fragment" : "\"C:\\Users\\ignac\\Desktop\\Proyecto AED\\Libs\\x86_64-w64-mingw32_SDL2\\lib\\libSDL2.dll.a\"",
 				"role" : "libraries"
 			},
 			{

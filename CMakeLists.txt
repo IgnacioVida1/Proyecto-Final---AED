@@ -3,7 +3,7 @@ project(Proyecto_AED)
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(SDL2_DIR "C:/librerias/x86_64-w64-mingw32_SDL2")
+set(SDL2_DIR "${CMAKE_SOURCE_DIR}/Libs/x86_64-w64-mingw32_SDL2")
 
 include_directories(${SDL2_DIR}/include)
 include_directories(${SDL2_DIR}/include/SDL2)
@@ -24,8 +24,8 @@ add_executable(Proyecto_AED mainn.cpp
 )
 
 target_link_libraries(Proyecto_AED
-        mingw32           # Primero mingw32
-        SDL2main          # Luego SDL2main
+        mingw32
+        SDL2main
         SDL2
         SDL2_ttf
         ${SDL2_DIR}/lib/libSDL2.dll.a

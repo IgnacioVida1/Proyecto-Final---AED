@@ -23,9 +23,6 @@ Game::Game() : isRunning(false), frameCount(0), gameTime(0.0f), currentState(Gam
     settings.playerSpeed = PLAYER_MAX_SPEED;
     settings.botSpeed = BOT_MAX_SPEED;
 
-    total_bots = settings.totalBots;
-    total_pellets = settings.totalPellets;
-
     config.WorldWidth = WORLD_WIDTH;
     config.WorldHeight = WORLD_HEIGHT;
     config.quadCapacity = QUADTREE_DEFAULT_CAPACITY;
@@ -39,13 +36,13 @@ Game::Game() : isRunning(false), frameCount(0), gameTime(0.0f), currentState(Gam
     player = new Player();
     allEntities.push_back(player);
 
-    for (int i = 0; i < total_bots; i++) {
+    for (int i = 0; i < TOTAL_BOTS; i++) {
         Bot* bot = new Bot(i + 1);
         bots.push_back(bot);
         allEntities.push_back(bot);
     }
 
-    for (int i = 0; i < total_pellets; i++) {
+    for (int i = 0; i < TOTAL_PELLETS; i++) {
         Pellet* pellet = new Pellet();
         pellets.push_back(pellet);
         allEntities.push_back(pellet);
@@ -87,6 +84,7 @@ void Game::startGame() {
     player->active = true;
     player->position = Point(WORLD_WIDTH / 2.0f, WORLD_HEIGHT / 2.0f);
     player->mass = PLAYER_INITIAL_MASS;
+    player->speed = settings.playerSpeed;
     player->velX = 0;
     player->velY = 0;
 
@@ -95,6 +93,7 @@ void Game::startGame() {
         bot->position.x = WORLD_BOT_SPAWN_MARGIN + rand() % (int)(WORLD_WIDTH - WORLD_BOT_SPAWN_MARGIN * 2);
         bot->position.y = WORLD_BOT_SPAWN_MARGIN + rand() % (int)(WORLD_HEIGHT - WORLD_BOT_SPAWN_MARGIN * 2);
         bot->mass = BOT_INITIAL_MASS_MIN + (rand() % 100) / 100.0f;
+        bot->speed = settings.botSpeed;
         bot->velX = 0;
         bot->velY = 0;
         bot->setState(BotState::WANDER);
@@ -371,7 +370,6 @@ void Game::applySettings() {
     config.quadCapacity = QUADTREE_DEFAULT_CAPACITY;
     config.maxQuadLevels = QUADTREE_MAX_LEVELS;
     config.showQuad = settings.showQuad;
-    player->maxSpeed = settings.playerSpeed;
 
     player->maxSpeed = settings.playerSpeed;
     for (auto bot : bots) {

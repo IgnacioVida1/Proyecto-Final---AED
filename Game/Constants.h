@@ -56,7 +56,7 @@ constexpr float BOT_FOOD_PRIORITY_MULTIPLIER = 0.5f;
 constexpr float BOT_SIZE_COMPARISON_THRESHOLD = 1.2f;
 
 // Pellets
-constexpr int TOTAL_PELLETS = 1000;
+constexpr int TOTAL_PELLETS = 1500;
 constexpr float PELLET_INITIAL_MASS_MIN = 0.2f;
 constexpr float PELLET_INITIAL_MASS_MAX = 0.4f;
 constexpr float PELLET_BASE_RADIUS_MIN = 5.0f;
