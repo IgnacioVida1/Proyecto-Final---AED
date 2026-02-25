@@ -117,7 +117,7 @@ public:
 
     void applySettings();
 
-    bool checkVictoryCondition();
+    GameEntity* checkVictoryCondition();
 
     void printGameStats();
 };

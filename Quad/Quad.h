@@ -26,8 +26,6 @@ public:
 
     bool subdivided;
 
-    int DEFAULT_CAPACITY = 4;
-    int MAX_LEVELS = 8;
 
     Quad(const int l_, const Rect& b_, int c) : level(l_), capacity(c), bounds(b_),
     subdivided(false), TopLeft(nullptr), TopRight(nullptr), BotLeft(nullptr), BotRight(nullptr) { entities.reserve(capacity); }

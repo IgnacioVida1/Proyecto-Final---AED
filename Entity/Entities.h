@@ -61,6 +61,8 @@ protected:
     void eat(GameEntity* other);
 
     virtual std::pair<Color, Color> getColor() const;
+
+    EntityType getType() const { return type; }
 };
 
 

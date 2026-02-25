@@ -13,6 +13,7 @@ constexpr float WORLD_HEIGHT = 2000.0f;
 constexpr float WORLD_SPAWN_MARGIN = 50.0f;
 constexpr float WORLD_BOT_SPAWN_MARGIN = 200.0f;
 constexpr float WORLD_PELLET_SPAWN_MARGIN = 50.0f;
+constexpr int MAX_SPAWN_ATTEMPTS = 50;
 
 // Tamaño de la ventana
 constexpr int VIEWPORT_WIDTH = 1024;
@@ -100,8 +101,11 @@ constexpr float ENTITY_TEXT_MIN_ZOOM = 0.7f;
 constexpr float GAME_OVER_DELAY = 3.0f;
 
 // Victoria
-constexpr float VICTORY_SIZE_RATIO = 0.90f;
+constexpr float VICTORY_SIZE_RATIO = 0.75f;
 constexpr float VICTORY_RADIUS = (WORLD_WIDTH * VICTORY_SIZE_RATIO) / 2.0f;
+
+constexpr float TEXTURE_BASE_SIZE = 64.0f;
+constexpr float TEXTURE_BASE_RADIUS = 32.0f;
 
 #endif //CONSTANTS_H
 

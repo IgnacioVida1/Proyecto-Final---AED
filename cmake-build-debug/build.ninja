@@ -52,56 +52,56 @@ build cmake_object_order_depends_target_Proyecto_AED: phony || .
 build CMakeFiles/Proyecto_AED.dir/mainn.cpp.obj: CXX_COMPILER__Proyecto_AED_unscanned_Debug C$:/Users/ignac/Desktop/Proyecto$ AED/mainn.cpp || cmake_object_order_depends_target_Proyecto_AED
   DEP_FILE = CMakeFiles\Proyecto_AED.dir\mainn.cpp.obj.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2"
+  INCLUDES = -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include/SDL2"
   OBJECT_DIR = CMakeFiles\Proyecto_AED.dir
   OBJECT_FILE_DIR = CMakeFiles\Proyecto_AED.dir
 
 build CMakeFiles/Proyecto_AED.dir/Quad/Quad.cpp.obj: CXX_COMPILER__Proyecto_AED_unscanned_Debug C$:/Users/ignac/Desktop/Proyecto$ AED/Quad/Quad.cpp || cmake_object_order_depends_target_Proyecto_AED
   DEP_FILE = CMakeFiles\Proyecto_AED.dir\Quad\Quad.cpp.obj.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2"
+  INCLUDES = -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include/SDL2"
   OBJECT_DIR = CMakeFiles\Proyecto_AED.dir
   OBJECT_FILE_DIR = CMakeFiles\Proyecto_AED.dir\Quad
 
 build CMakeFiles/Proyecto_AED.dir/Quad/Rect.cpp.obj: CXX_COMPILER__Proyecto_AED_unscanned_Debug C$:/Users/ignac/Desktop/Proyecto$ AED/Quad/Rect.cpp || cmake_object_order_depends_target_Proyecto_AED
   DEP_FILE = CMakeFiles\Proyecto_AED.dir\Quad\Rect.cpp.obj.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2"
+  INCLUDES = -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include/SDL2"
   OBJECT_DIR = CMakeFiles\Proyecto_AED.dir
   OBJECT_FILE_DIR = CMakeFiles\Proyecto_AED.dir\Quad
 
 build CMakeFiles/Proyecto_AED.dir/Game/CollisionSystem.cpp.obj: CXX_COMPILER__Proyecto_AED_unscanned_Debug C$:/Users/ignac/Desktop/Proyecto$ AED/Game/CollisionSystem.cpp || cmake_object_order_depends_target_Proyecto_AED
   DEP_FILE = CMakeFiles\Proyecto_AED.dir\Game\CollisionSystem.cpp.obj.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2"
+  INCLUDES = -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include/SDL2"
   OBJECT_DIR = CMakeFiles\Proyecto_AED.dir
   OBJECT_FILE_DIR = CMakeFiles\Proyecto_AED.dir\Game
 
 build CMakeFiles/Proyecto_AED.dir/Game/Game.cpp.obj: CXX_COMPILER__Proyecto_AED_unscanned_Debug C$:/Users/ignac/Desktop/Proyecto$ AED/Game/Game.cpp || cmake_object_order_depends_target_Proyecto_AED
   DEP_FILE = CMakeFiles\Proyecto_AED.dir\Game\Game.cpp.obj.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2"
+  INCLUDES = -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include/SDL2"
   OBJECT_DIR = CMakeFiles\Proyecto_AED.dir
   OBJECT_FILE_DIR = CMakeFiles\Proyecto_AED.dir\Game
 
 build CMakeFiles/Proyecto_AED.dir/Entity/Entities.cpp.obj: CXX_COMPILER__Proyecto_AED_unscanned_Debug C$:/Users/ignac/Desktop/Proyecto$ AED/Entity/Entities.cpp || cmake_object_order_depends_target_Proyecto_AED
   DEP_FILE = CMakeFiles\Proyecto_AED.dir\Entity\Entities.cpp.obj.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2"
+  INCLUDES = -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include/SDL2"
   OBJECT_DIR = CMakeFiles\Proyecto_AED.dir
   OBJECT_FILE_DIR = CMakeFiles\Proyecto_AED.dir\Entity
 
 build CMakeFiles/Proyecto_AED.dir/Renderer/Renderer.cpp.obj: CXX_COMPILER__Proyecto_AED_unscanned_Debug C$:/Users/ignac/Desktop/Proyecto$ AED/Renderer/Renderer.cpp || cmake_object_order_depends_target_Proyecto_AED
   DEP_FILE = CMakeFiles\Proyecto_AED.dir\Renderer\Renderer.cpp.obj.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2"
+  INCLUDES = -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include/SDL2"
   OBJECT_DIR = CMakeFiles\Proyecto_AED.dir
   OBJECT_FILE_DIR = CMakeFiles\Proyecto_AED.dir\Renderer
 
 build CMakeFiles/Proyecto_AED.dir/Renderer/Camera.cpp.obj: CXX_COMPILER__Proyecto_AED_unscanned_Debug C$:/Users/ignac/Desktop/Proyecto$ AED/Renderer/Camera.cpp || cmake_object_order_depends_target_Proyecto_AED
   DEP_FILE = CMakeFiles\Proyecto_AED.dir\Renderer\Camera.cpp.obj.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2"
+  INCLUDES = -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include" -I"C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include/SDL2"
   OBJECT_DIR = CMakeFiles\Proyecto_AED.dir
   OBJECT_FILE_DIR = CMakeFiles\Proyecto_AED.dir\Renderer
 
@@ -113,12 +113,12 @@ build CMakeFiles/Proyecto_AED.dir/Renderer/Camera.cpp.obj: CXX_COMPILER__Proyect
 #############################################
 # Link the executable Proyecto_AED.exe
 
-build Proyecto_AED.exe: CXX_EXECUTABLE_LINKER__Proyecto_AED_Debug CMakeFiles/Proyecto_AED.dir/mainn.cpp.obj CMakeFiles/Proyecto_AED.dir/Quad/Quad.cpp.obj CMakeFiles/Proyecto_AED.dir/Quad/Rect.cpp.obj CMakeFiles/Proyecto_AED.dir/Game/CollisionSystem.cpp.obj CMakeFiles/Proyecto_AED.dir/Game/Game.cpp.obj CMakeFiles/Proyecto_AED.dir/Entity/Entities.cpp.obj CMakeFiles/Proyecto_AED.dir/Renderer/Renderer.cpp.obj CMakeFiles/Proyecto_AED.dir/Renderer/Camera.cpp.obj | C$:/Users/ignac/Desktop/Proyecto$ AED/Libs/x86_64-w64-mingw32_SDL2/lib/libSDL2.dll.a
+build Proyecto_AED.exe: CXX_EXECUTABLE_LINKER__Proyecto_AED_Debug CMakeFiles/Proyecto_AED.dir/mainn.cpp.obj CMakeFiles/Proyecto_AED.dir/Quad/Quad.cpp.obj CMakeFiles/Proyecto_AED.dir/Quad/Rect.cpp.obj CMakeFiles/Proyecto_AED.dir/Game/CollisionSystem.cpp.obj CMakeFiles/Proyecto_AED.dir/Game/Game.cpp.obj CMakeFiles/Proyecto_AED.dir/Entity/Entities.cpp.obj CMakeFiles/Proyecto_AED.dir/Renderer/Renderer.cpp.obj CMakeFiles/Proyecto_AED.dir/Renderer/Camera.cpp.obj | C$:/Users/ignac/Desktop/Proyecto$ AED/Libs/x86_64-w64-mingw32_SDL2/lib/libSDL2.dll.a C$:/Users/ignac/Desktop/Proyecto$ AED/Libs/x86_64-w64-mingw32_SDL2_Image/lib/libSDL2_image.dll.a
   FLAGS = -g
-  LINK_LIBRARIES = -lmingw32  -lSDL2main  -lSDL2  -lSDL2_ttf  "C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/lib/libSDL2.dll.a"  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
-  LINK_PATH = -LC:/Users/ignac/Desktop/PROYEC~1/Libs/X86_64~1/lib
+  LINK_LIBRARIES = -lmingw32  -lSDL2main  -lSDL2  -lSDL2_ttf  "C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/lib/libSDL2.dll.a"  "C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/lib/libSDL2_image.dll.a"  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_PATH = -LC:/Users/ignac/Desktop/PROYEC~1/Libs/X86_64~1/lib   -LC:/Users/ignac/Desktop/PROYEC~1/Libs/X86_64~2/lib
   OBJECT_DIR = CMakeFiles\Proyecto_AED.dir
-  POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D "C:\Users\ignac\Desktop\Proyecto AED\cmake-build-debug" && "C:\Program Files\JetBrains\CLion 2024.3.5\bin\cmake\win\x64\bin\cmake.exe" -E copy_if_different "C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/bin/SDL2.dll" "C:/Users/ignac/Desktop/Proyecto AED/cmake-build-debug/SDL2.dll" && cd /D "C:\Users\ignac\Desktop\Proyecto AED\cmake-build-debug" && "C:\Program Files\JetBrains\CLion 2024.3.5\bin\cmake\win\x64\bin\cmake.exe" -E copy_if_different "C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/bin/SDL2_ttf.dll" "C:/Users/ignac/Desktop/Proyecto AED/cmake-build-debug/SDL2_ttf.dll""
+  POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D "C:\Users\ignac\Desktop\Proyecto AED\cmake-build-debug" && "C:\Program Files\JetBrains\CLion 2024.3.5\bin\cmake\win\x64\bin\cmake.exe" -E copy_if_different "C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/bin/SDL2.dll" "C:/Users/ignac/Desktop/Proyecto AED/cmake-build-debug/SDL2.dll" && cd /D "C:\Users\ignac\Desktop\Proyecto AED\cmake-build-debug" && "C:\Program Files\JetBrains\CLion 2024.3.5\bin\cmake\win\x64\bin\cmake.exe" -E copy_if_different "C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/bin/SDL2_ttf.dll" "C:/Users/ignac/Desktop/Proyecto AED/cmake-build-debug/SDL2_ttf.dll" && cd /D "C:\Users\ignac\Desktop\Proyecto AED\cmake-build-debug" && "C:\Program Files\JetBrains\CLion 2024.3.5\bin\cmake\win\x64\bin\cmake.exe" -E copy_if_different "C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/bin/SDL2_image.dll" "C:/Users/ignac/Desktop/Proyecto AED/cmake-build-debug/""
   PRE_LINK = cd .
   TARGET_FILE = Proyecto_AED.exe
   TARGET_IMPLIB = libProyecto_AED.dll.a

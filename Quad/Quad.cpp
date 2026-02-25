@@ -28,7 +28,7 @@ void Quad::clear() {
 
 void Quad::updateEntity(GameEntity* e) {
 
-    if (bounds.contains(e->position)) { return; }
+    if (!bounds.contains(e->position)) { return; }
 
     removeEntity(e);
     insert(e);
@@ -53,7 +53,7 @@ void Quad::removeEntity(GameEntity* e) {
 
 void Quad::subdivide() {
 
-    if ( subdivided  || level >= MAX_LEVELS ) { return; }
+    if ( subdivided  || level >= QUADTREE_MAX_LEVELS ) { return; }
 
     float halfWidth = bounds.width / 2.0f;
     float halfHeight = bounds.height / 2.0f;
@@ -106,7 +106,7 @@ bool Quad::insert(GameEntity* e) {
         return true;
     }
 
-    if ( level >= MAX_LEVELS ) {
+    if ( level >= QUADTREE_MAX_LEVELS ) {
         entities.push_back(e);
         return true;
     }

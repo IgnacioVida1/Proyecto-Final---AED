@@ -129,13 +129,12 @@ std::vector<std::pair<GameEntity*, GameEntity*>> CollisionSystem::detectCollisio
 
 bool CollisionSystem::checkCollisions(GameEntity *a, GameEntity *b) {
 
-    Rect boxA = a->getBoundingBox();
-    Rect boxB = b->getBoundingBox();
+    float dx = a->position.x - b->position.x;
+    float dy = a->position.y - b->position.y;
+    float distSq = dx*dx + dy*dy;
+    float minDist = a->radius + b->radius;
 
-    return !(boxA.x + boxA.width < boxB.x ||
-             boxB.x + boxB.width < boxA.x ||
-             boxA.y + boxA.height < boxB.y ||
-             boxB.y + boxB.height < boxA.y);
+    return distSq < (minDist * minDist);
 }
 
 
@@ -244,7 +243,6 @@ void CollisionSystem::setQuadCapacity(int capacity) {
 }
 void CollisionSystem::setMaxQuadLevels(int levels) {
     config.maxQuadLevels = levels;
-    quad->MAX_LEVELS = levels;
 }
 void CollisionSystem::printPerformanceStats() const {
 

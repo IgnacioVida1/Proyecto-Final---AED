@@ -22,9 +22,6 @@ class Entity {
     float ateTimer = 0.0f;
     float pulseScale = 1.0f;
 
-    float rotationAngle = 0.0f;
-    float targetScale = 1.0f;
-
     virtual Rect getBoundingBox() const {
         return {position.x - radius, position.y - radius, radius * 2, radius * 2};
     }

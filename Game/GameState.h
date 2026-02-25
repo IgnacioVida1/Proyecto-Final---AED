@@ -11,7 +11,8 @@ enum class GameState {
     MENU_PAUSE,
     PLAYING,
     GAME_OVER,
-    VICTORY
+    VICTORY,
+    LOSING
 };
 
 struct MenuOption {

@@ -113,22 +113,29 @@ void Game::respawnPlayer() {
     bool safePosition = false;
     Point spawnPos(0, 0);
 
-    while (!safePosition && attempts < 50) {
+    while (!safePosition && attempts < MAX_SPAWN_ATTEMPTS) {
         spawnPos.x = WORLD_SPAWN_MARGIN + rand() % (int)(WORLD_WIDTH - WORLD_SPAWN_MARGIN * 2);
         spawnPos.y = WORLD_SPAWN_MARGIN + rand() % (int)(WORLD_HEIGHT - WORLD_SPAWN_MARGIN * 2);
 
         safePosition = true;
 
         for (auto bot : bots) {
-            if (bot->active) {
-                float dx = bot->position.x - spawnPos.x;
-                float dy = bot->position.y - spawnPos.y;
-                float dist = sqrt(dx*dx + dy*dy);
+            if (!bot->active) continue;
 
-                if (dist < SAFE_SPAWN_DISTANCE && bot->mass > player->mass * EAT_SIZE_COMPARISON_THRESHOLD) {
-                    safePosition = false;
-                    break;
-                }
+            float dx = bot->position.x - spawnPos.x;
+            float dy = bot->position.y - spawnPos.y;
+            float dist = sqrt(dx*dx + dy*dy);
+            float minDist = bot->radius + PLAYER_BASE_RADIUS;
+
+            // No spawnear dentro de bots
+            if (dist < minDist) {
+                safePosition = false;
+                break;
+            }
+
+            if (dist < SAFE_SPAWN_DISTANCE && bot->mass > player->mass * EAT_SIZE_COMPARISON_THRESHOLD) {
+                safePosition = false;
+                break;
             }
         }
         attempts++;
@@ -156,16 +163,19 @@ void Game::returnToMenu() {
     gameOverTimer = 0.0f;
 }
 
-bool Game::checkVictoryCondition() {
-    if (!player->active) return false;
+GameEntity* Game::checkVictoryCondition() {
 
-    float playerDiameter = player->radius * 2;
+    for (auto e : allEntities) {
+        if (!e->active) continue;
 
-    if (playerDiameter >= WORLD_WIDTH * VICTORY_SIZE_RATIO) {
-        return true;
+        float eDiameter = e->radius * 2;
+
+        if (eDiameter >= WORLD_WIDTH * VICTORY_SIZE_RATIO) {
+            return e;
+        }
     }
 
-    return false;
+    return nullptr;
 }
 
 void Game::update(float deltatime) {
@@ -178,13 +188,21 @@ void Game::update(float deltatime) {
 
         case GameState::MENU_MAIN:
             break;
-        case GameState::PLAYING:
+        case GameState::PLAYING: {
             updateEntities(deltatime);
 
             collisionSystem->update();
 
-            if (checkVictoryCondition()) {
-                currentState = GameState::VICTORY;
+            GameEntity* winner = checkVictoryCondition();
+            if (winner) {
+                if (winner->getType() == EntityType::PLAYER) {
+                    currentState = GameState::VICTORY;
+                    std::cout << "¡VICTORIA! El jugador ganó" << std::endl;
+                } else if (winner->getType() == EntityType::BOT) {
+                    currentState = GameState::LOSING;
+                    std::cout << "Derrota: Un bot ganó" << std::endl;
+                }
+                break;
             }
 
             applyGameRules();
@@ -196,9 +214,11 @@ void Game::update(float deltatime) {
             updateRespawnTimers(deltatime);
             checkAndRespawn();
             break;
-        case GameState::GAME_OVER:
+        }
+        case GameState::GAME_OVER: {
             gameOverTimer += deltatime;
             break;
+        }
     }
 //    if (frameCount % 300 == 0) { printGameStats(); }
 }
@@ -256,9 +276,25 @@ void Game::updateRespawnTimers(float deltatime) {
 
             Pellet* pellet = dynamic_cast<Pellet*>(it->entity);
 
-            pellet->position.x = WORLD_PELLET_SPAWN_MARGIN + rand() % (int)(WORLD_WIDTH - WORLD_PELLET_SPAWN_MARGIN * 2);
-            pellet->position.y = WORLD_PELLET_SPAWN_MARGIN + rand() % (int)(WORLD_HEIGHT - WORLD_PELLET_SPAWN_MARGIN * 2);
+            Point pos(0, 0);
+            bool safeFound = false;
 
+            for (int attempts = 0; attempts < 10 && !safeFound; attempts++) {
+                pos.x = WORLD_PELLET_SPAWN_MARGIN + rand() % (int)(WORLD_WIDTH - WORLD_PELLET_SPAWN_MARGIN * 2);
+                pos.y = WORLD_PELLET_SPAWN_MARGIN + rand() % (int)(WORLD_HEIGHT - WORLD_PELLET_SPAWN_MARGIN * 2);
+
+                safeFound = true;
+                auto nearby = collisionSystem->queryNearby(pos, 50.0f);
+
+                for (auto entity : nearby) {
+                    if (entity->getBoundingBox().contains(pos)) {
+                        safeFound = false;
+                        break;
+                    }
+                }
+            }
+
+            pellet->position = pos;
             pellet->active = true;
             pellet->mass = PELLET_INITIAL_MASS_MIN + (rand() % 100) / 500.0f;
             pellet->velX = 0;
@@ -276,9 +312,33 @@ void Game::updateRespawnTimers(float deltatime) {
         if (it->timeRemaining <= 0) {
             Bot* bot = dynamic_cast<Bot*>(it->entity);
 
-            bot->position.x = WORLD_BOT_SPAWN_MARGIN + rand() % (int)(WORLD_WIDTH - WORLD_BOT_SPAWN_MARGIN * 2);
-            bot->position.y = WORLD_BOT_SPAWN_MARGIN + rand() % (int)(WORLD_HEIGHT - WORLD_BOT_SPAWN_MARGIN * 2);
+            Point pos(0, 0);
+            bool safeFound = false;
 
+            for (int attempts = 0; attempts < 10 && !safeFound; attempts++) {
+                pos.x = WORLD_BOT_SPAWN_MARGIN + rand() % (int)(WORLD_WIDTH - WORLD_BOT_SPAWN_MARGIN * 2);
+                pos.y = WORLD_BOT_SPAWN_MARGIN + rand() % (int)(WORLD_HEIGHT - WORLD_BOT_SPAWN_MARGIN * 2);
+
+                safeFound = true;
+                auto nearby = collisionSystem->queryNearby(pos, 50.0f);
+
+                for (auto entity : nearby) {
+                    if (entity->getBoundingBox().contains(pos)) {
+                        safeFound = false;
+                        break;
+                    }
+
+                    float dx = entity->position.x - pos.x;
+                    float dy = entity->position.y - pos.y;
+                    float dist = sqrt(dx*dx + dy*dy);
+                    if (dist < entity->radius + bot->radius) {
+                        safeFound = false;
+                        break;
+                    }
+                }
+            }
+
+            bot->position = pos;
             bot->active = true;
             bot->mass = BOT_INITIAL_MASS_MIN + (rand() % 100) / 100.0f;
             bot->velX = 0;

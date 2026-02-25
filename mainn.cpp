@@ -50,6 +50,7 @@ int main(int argc, char* argv[]) {
     int selectedPause = 0;
     int selectedGameOver = 0;
     int selectedVictory = 0;
+    int selectedLosing = 0;
 
     while (running) {
         Uint32 currentTime = SDL_GetTicks();
@@ -228,7 +229,12 @@ int main(int argc, char* argv[]) {
                             } else {
                                 game.returnToMenu();
                             }
-                                 }
+                        }
+                    break;
+                    case GameState::LOSING:
+                        if (event.key.keysym.sym == SDLK_RETURN || event.key.keysym.sym == SDLK_SPACE) {
+                            game.returnToMenu();
+                        }
                     break;
                 }
             }
@@ -284,6 +290,9 @@ int main(int argc, char* argv[]) {
                 break;
             case GameState::VICTORY:
                 renderer.renderVictoryScreen(&game, selectedVictory);
+                break;
+            case GameState::LOSING:
+                renderer.renderLosing(&game, selectedLosing);
                 break;
         }
 

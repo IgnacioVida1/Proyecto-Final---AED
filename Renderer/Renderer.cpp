@@ -27,6 +27,12 @@ bool Renderer::init() {
         return false;
     }
 
+    int imgFlags = IMG_INIT_PNG;
+    if (!(IMG_Init(imgFlags) & imgFlags)) {
+        std::cout << "Error SDL_image: " << IMG_GetError() << std::endl;
+        return false;
+    }
+
     font = TTF_OpenFont("C:/Windows/Fonts/Arial.ttf", 20);
     if (!font) { font = TTF_OpenFont("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 16); }
     if (!font) { font = TTF_OpenFont("/System/Library/Fonts/Helvetica.ttf", 20); }
@@ -44,15 +50,31 @@ bool Renderer::init() {
         std::cout << "ADVERTENCIA: No se pudo cargar fuente pequeña" << std::endl;
     }
 
+    playerTexture = loadTexture("../Renderer/entity.png");
+    botTexture = loadTexture("../Renderer/entity.png");
+    pelletTexture = loadTexture("../Renderer/entity.png");
+
+    if (!playerTexture || !botTexture || !pelletTexture) {
+        std::cout << "ADVERTENCIA: No se pudieron cargar todas las texturas" << std::endl;
+    } else {
+        std::cout << "Texturas cargadas correctamente" << std::endl;
+    }
+
     return true;
 }
 
 void Renderer::cleanup() {
 
+    if (playerTexture) SDL_DestroyTexture(playerTexture);
+    if (botTexture) SDL_DestroyTexture(botTexture);
+    if (pelletTexture) SDL_DestroyTexture(pelletTexture);
+
     if (font) { TTF_CloseFont(font); }
     if (fontSmall) { TTF_CloseFont(fontSmall); }
     if (renderer) { SDL_DestroyRenderer(renderer); }
     if (window) { SDL_DestroyWindow(window); }
+
+    IMG_Quit();
 }
 
 void Renderer::clear() {
@@ -337,7 +359,7 @@ void Renderer::renderPauseMenu(Game* game, int selectedOption) {
     const auto& entities = game->getEntities();
     for (auto entity : entities) {
         if (entity->active && camera->isVisible(entity->position, entity->radius)) {
-            renderEntity(entity);
+            drawEntityTextured(entity);
         }
     }
 
@@ -401,7 +423,7 @@ void Renderer::renderGameOver(Game* game, int selectedOption) {
     const auto& entities = game->getEntities();
     for (auto entity : entities) {
         if (entity->active && camera->isVisible(entity->position, entity->radius)) {
-            renderEntity(entity);
+            drawEntityTextured(entity);
         }
     }
 
@@ -422,15 +444,15 @@ void Renderer::renderGameOver(Game* game, int selectedOption) {
     int panelY = height/2 - panelH/2;
 
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawColor(renderer, 40, 20, 20, 230);
+    SDL_SetRenderDrawColor(renderer, 40, 20, 40, 230);
     SDL_Rect panel = {panelX, panelY, panelW, panelH};
     SDL_RenderFillRect(renderer, &panel);
 
-    SDL_SetRenderDrawColor(renderer, 200, 50, 50, 255);
+    SDL_SetRenderDrawColor(renderer, 200, 50, 200, 255);
     SDL_RenderDrawRect(renderer, &panel);
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
 
-    drawText("GAME OVER", panelX + panelW/2 - 120, panelY + 40, Color::Red(), false);
+    drawText("MUERTO", panelX + panelW/2 - 120, panelY + 40, Color::Magenta(), false);
 
     drawText("Puntaje: " + std::to_string(player->score),
              panelX + 150, panelY + 100, Color::White(), false);
@@ -469,6 +491,77 @@ void Renderer::renderGameOver(Game* game, int selectedOption) {
     present();
 }
 
+void Renderer::renderLosing(Game* game, int selectedOption) {
+    clear();
+    drawGrid();
+
+    if (game->getConfig().showQuad) {
+        drawQuad(game->getCollisionSystem()->getQuad());
+    }
+
+    const auto& entities = game->getEntities();
+    for (auto entity : entities) {
+        if (entity->active && camera->isVisible(entity->position, entity->radius)) {
+            drawEntityTextured(entity);
+        }
+    }
+
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 200);
+    SDL_Rect overlay = {0, 0, width, height};
+    SDL_RenderFillRect(renderer, &overlay);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+
+    Player* player = game->getPlayer();
+
+    // Panel principal
+    int panelW = 500;
+    int panelH = 350;
+    int panelX = width/2 - panelW/2;
+    int panelY = height/2 - panelH/2;
+
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(renderer, 40, 20, 20, 230);
+    SDL_Rect panel = {panelX, panelY, panelW, panelH};
+    SDL_RenderFillRect(renderer, &panel);
+
+    SDL_SetRenderDrawColor(renderer, 200, 50, 50, 255);
+    SDL_RenderDrawRect(renderer, &panel);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+
+    drawText("GAME OVER", panelX + panelW/2 - 120, panelY + 40, Color::Red(), false);
+
+    drawText("Puntaje: " + std::to_string(player->score),
+             panelX + 150, panelY + 100, Color::White(), false);
+    drawText("Masa final: " + std::to_string((int)player->mass),
+             panelX + 150, panelY + 135, Color::White(), false);
+
+    std::vector<std::string> options = {"MENU PRINCIPAL"};
+    int startY = panelY + 200;
+
+    for (size_t i = 0; i < options.size(); i++) {
+        int textX = panelX + panelW/2 - 70;
+        int textY = startY + i * 50;
+
+        if (i == selectedOption) {
+            SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+            SDL_SetRenderDrawColor(renderer, 100, 100, 50, 200);
+            SDL_Rect selBg = {textX - 10, textY - 5, 160, 30};
+            SDL_RenderFillRect(renderer, &selBg);
+            SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+
+            drawText(options[i], textX, textY, Color::Yellow(), false);
+        } else {
+            drawText(options[i], textX, textY, Color::White(), false);
+        }
+    }
+
+    drawText("UP/DOWN para navegar, ENTER para seleccionar",
+             panelX + 70, panelY + panelH - 40, Color(200, 200, 200, 255), true);
+
+    present();
+}
+
 void Renderer::renderVictoryScreen(Game* game, int selectedOption) {
     clear();
     drawGrid();
@@ -480,7 +573,7 @@ void Renderer::renderVictoryScreen(Game* game, int selectedOption) {
     const auto& entities = game->getEntities();
     for (auto entity : entities) {
         if (entity->active && camera->isVisible(entity->position, entity->radius)) {
-            renderEntity(entity);
+            drawEntityTextured(entity);
         }
     }
 
@@ -509,7 +602,7 @@ void Renderer::renderVictoryScreen(Game* game, int selectedOption) {
     drawText("! VICTORIA !", panelX + panelW/2 - 140, panelY + 50, Color::Yellow(), false);
     drawText("! VICTORIA !", panelX + panelW/2 - 142, panelY + 48, Color::Orange(), false);
 
-    drawText("¡Has dominado el mundo!", panelX + 150, panelY + 120, Color::White(), false);
+    drawText("!Has dominado el mundo!", panelX + 150, panelY + 120, Color::White(), false);
     drawText("Tamano final: " + std::to_string((int)(player->radius * 2)),
              panelX + 200, panelY + 160, Color::Cyan(), false);
     drawText("Masa final: " + std::to_string((int)player->mass),
@@ -567,7 +660,7 @@ void Renderer::renderGame(Game* game, float fps) {
             const auto& entities = game->getEntities();
             for (auto entity : entities) {
                 if (entity->active && camera->isVisible(entity->position, entity->radius)) {
-                    renderEntity(entity);
+                    drawEntityTextured(entity);
                 }
             }
 
@@ -583,7 +676,7 @@ void Renderer::renderGame(Game* game, float fps) {
             const auto& entitiesBg = game->getEntities();
             for (auto entity : entitiesBg) {
                 if (entity->active && camera->isVisible(entity->position, entity->radius)) {
-                    renderEntity(entity);
+                    drawEntityTextured(entity);
                 }
             }
 
@@ -591,6 +684,102 @@ void Renderer::renderGame(Game* game, float fps) {
             break;
         }
     }
+}
+
+void Renderer::drawEntityTextured(GameEntity* entity) {
+    if (!entity->active || !camera) return;
+
+    SDL_Texture* texture = nullptr;
+    switch (entity->type) {
+        case EntityType::PLAYER:
+            texture = playerTexture;
+        break;
+        case EntityType::BOT:
+            texture = botTexture;
+        break;
+        case EntityType::PELLET:
+            texture = pelletTexture;
+        break;
+        default:
+            return;
+    }
+
+    if (!texture) return;
+
+    // Calcular posición y tamaño en pantalla
+    float worldX = entity->position.x;
+    float worldY = entity->position.y;
+
+    // Convertir a coordenadas de pantalla (esto da la posición del CENTRO)
+    Point screenCenter = camera->worldToScreen(Point(worldX, worldY));
+
+    // Calcular el radio en píxeles de pantalla
+    float screenRadius = camera->worldToScreenSize(entity->radius);
+
+
+    SDL_Rect dest = {
+        (int)(screenCenter.x - screenRadius),
+        (int)(screenCenter.y - screenRadius),
+        (int)(screenRadius * 2),
+        (int)(screenRadius * 2)
+    };
+
+    // Aplicar color tint si es necesario (para variaciones)
+    Color tint = Color::White();
+
+    switch (entity->type) {
+        case EntityType::PLAYER:
+            tint = Color::Green();
+        break;
+
+        case EntityType::PELLET:
+            tint = entity->getColor().first;
+        break;
+
+        case EntityType::BOT:
+            tint = entity->getColor().first;
+        break;
+    }
+
+    SDL_SetTextureColorMod(texture, tint.r, tint.g, tint.b);
+    SDL_SetTextureAlphaMod(texture, tint.a);
+
+    SDL_RenderCopy(renderer, texture, nullptr, &dest);
+
+    // Resetear color mod
+    if (entity->type == EntityType::BOT) {
+        SDL_SetTextureColorMod(texture, 255, 255, 255);
+    }
+
+    // Texto de masa (igual que antes)
+    if (entity->radius > ENTITY_TEXT_MIN_RADIUS && camera->getZoomLevel() > ENTITY_TEXT_MIN_ZOOM) {
+        std::string massText = std::to_string((int)entity->mass);
+        Point textPos = camera->worldToScreen(Point(
+            entity->position.x - 10,
+            entity->position.y - 10
+        ));
+        drawText(massText, textPos.x, textPos.y, Color::Black(), true);
+    }
+}
+
+SDL_Texture* Renderer::loadTexture(const std::string& path) {
+    SDL_Texture* texture = IMG_LoadTexture(renderer, path.c_str());
+    if (!texture) {
+        std::cout << "Error cargando textura " << path << ": " << IMG_GetError() << std::endl;
+
+        int size = 64;
+        SDL_Surface* surface = SDL_CreateRGBSurface(0, size, size, 32, 0, 0, 0, 0);
+        SDL_FillRect(surface, nullptr, SDL_MapRGBA(surface->format, 255, 0, 255, 255)); // Magenta
+
+        texture = SDL_CreateTextureFromSurface(renderer, surface);
+        SDL_FreeSurface(surface);
+    }
+
+    if (texture) {
+        SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
+    }
+
+    return texture;
 }
 
 void Renderer::renderEntity(GameEntity* entity) {

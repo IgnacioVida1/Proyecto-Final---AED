@@ -30,31 +30,49 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 13,
+				"line" : 18,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 11,
+				"line" : 15,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 16,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 26,
+				"line" : 31,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 8,
+				"line" : 10,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 9,
+				"line" : 11,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 12,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 13,
 				"parent" : 0
 			}
 		]
@@ -71,12 +89,20 @@
 			"includes" : 
 			[
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"path" : "C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 6,
 					"path" : "C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2/include/SDL2"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include"
+				},
+				{
+					"backtrace" : 8,
+					"path" : "C:/Users/ignac/Desktop/Proyecto AED/Libs/x86_64-w64-mingw32_SDL2_Image/include/SDL2"
 				}
 			],
 			"language" : "CXX",
@@ -121,27 +147,37 @@
 			},
 			{
 				"backtrace" : 3,
+				"fragment" : "-LC:\\Users\\ignac\\Desktop\\PROYEC~1\\Libs\\X86_64~2\\lib",
+				"role" : "libraryPath"
+			},
+			{
+				"backtrace" : 4,
 				"fragment" : "-lmingw32",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
+				"backtrace" : 4,
 				"fragment" : "-lSDL2main",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
+				"backtrace" : 4,
 				"fragment" : "-lSDL2",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
+				"backtrace" : 4,
 				"fragment" : "-lSDL2_ttf",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
+				"backtrace" : 4,
 				"fragment" : "\"C:\\Users\\ignac\\Desktop\\Proyecto AED\\Libs\\x86_64-w64-mingw32_SDL2\\lib\\libSDL2.dll.a\"",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 4,
+				"fragment" : "\"C:\\Users\\ignac\\Desktop\\Proyecto AED\\Libs\\x86_64-w64-mingw32_SDL2_Image\\lib\\libSDL2_image.dll.a\"",
 				"role" : "libraries"
 			},
 			{

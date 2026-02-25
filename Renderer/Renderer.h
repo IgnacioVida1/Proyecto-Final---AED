@@ -7,6 +7,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_image.h>
 #include <string>
 #include "../Quad/Quad.h"
 #include "Camera.h"
@@ -26,7 +27,7 @@ struct Color {
     static Color Yellow() { return Color(255, 255, 0, 255); }
     static Color Cyan() { return Color(0, 255, 255, 255); }
     static Color Magenta() { return Color(255, 0, 255, 255); }
-    static Color Orange() { return Color(255, 165, 0), 255; }
+    static Color Orange() { return Color(255, 165, 0, 255); }
     static Color Purple() { return Color(128, 0, 128, 255); }
 };
 
@@ -40,6 +41,12 @@ class Renderer {
     int width, height;
 
     Camera* camera;
+
+    SDL_Texture* playerTexture;
+    SDL_Texture* botTexture;
+    SDL_Texture* pelletTexture;
+
+    const float TEXTURE_BASE_RADIUS = 32.0f;
 
     public:
     Renderer(int w, int h) : window(nullptr), renderer(nullptr), font(nullptr), fontSmall(nullptr), width(w), height(h) {}
@@ -66,6 +73,9 @@ class Renderer {
 
     void drawText(const std::string& text, int x, int y, Color c, bool small = false);
 
+    void drawEntityTextured(GameEntity* entity);
+    SDL_Texture* loadTexture(const std::string& path);
+
     void drawWorldRect(float worldX, float worldY, float w, float h, Color c);
     void fillWorldRect(float worldX, float worldY, float w, float h, Color c);
     void drawWorldLine(float worldX1, float worldY1, float worldX2, float worldY2, Color c);
@@ -89,6 +99,8 @@ class Renderer {
     void renderMenu(Game* game);
 
     void renderGameOver(Game* game, int selectedOption);
+
+    void renderLosing(Game* game, int selectedOption);
 
     void renderGame(Game* game, float fps);
 

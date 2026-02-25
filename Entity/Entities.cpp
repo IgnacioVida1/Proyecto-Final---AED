@@ -32,7 +32,7 @@ void GameEntity::update(float deltatime) {
     velX *= MOVEMENT_FRICTION;
     velY *= MOVEMENT_FRICTION;
 
-    updateAnimations(deltatime);
+    // updateAnimations(deltatime);
 }
 
 void GameEntity::updateAnimations(float deltatime) {
@@ -47,10 +47,6 @@ void GameEntity::updateAnimations(float deltatime) {
             ateTimer = 0.0f;
             pulseScale = 1.0f;
         }
-    }
-
-    if (velX != 0 || velY != 0) {
-        rotationAngle += sqrt(velX*velX + velY*velY) * deltatime * 2.0f;
     }
 }
 
