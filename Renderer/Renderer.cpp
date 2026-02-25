@@ -305,7 +305,7 @@ void Renderer::renderMainMenu(Game* game, int selectedOption) {
                  Color(100 * intensity, 200 * intensity, 255 * intensity, 255), false);
     }
 
-    std::vector<std::string> options = {"JUGAR", "OPCIONES", "SALIR"};
+    vector<std::string> options = {"JUGAR", "OPCIONES", "SALIR"};
     int startY = height/2;
 
     for (size_t i = 0; i < options.size(); i++) {
@@ -385,7 +385,7 @@ void Renderer::renderPauseMenu(Game* game, int selectedOption) {
 
     drawText("PAUSA", panelX + panelW/2 - 60, panelY + 30, Color::Cyan(), false);
 
-    std::vector<std::string> options = {"CONTINUAR", "OPCIONES", "REINICIAR", "MENU PRINCIPAL"};
+    vector<std::string> options = {"CONTINUAR", "OPCIONES", "REINICIAR", "MENU PRINCIPAL"};
     int startY = panelY + 100;
 
     for (size_t i = 0; i < options.size(); i++) {
@@ -464,7 +464,7 @@ void Renderer::renderGameOver(Game* game, int selectedOption) {
         drawText("Espera " + std::to_string(remaining) + "...",
                  panelX + panelW/2 - 70, panelY + 200, Color::Yellow(), false);
     } else {
-        std::vector<std::string> options = {"REAPARECER", "MENU PRINCIPAL"};
+        vector<std::string> options = {"REAPARECER", "MENU PRINCIPAL"};
         int startY = panelY + 200;
 
         for (size_t i = 0; i < options.size(); i++) {
@@ -536,7 +536,7 @@ void Renderer::renderLosing(Game* game, int selectedOption) {
     drawText("Masa final: " + std::to_string((int)player->mass),
              panelX + 150, panelY + 135, Color::White(), false);
 
-    std::vector<std::string> options = {"MENU PRINCIPAL"};
+    vector<std::string> options = {"MENU PRINCIPAL"};
     int startY = panelY + 200;
 
     for (size_t i = 0; i < options.size(); i++) {
@@ -610,7 +610,7 @@ void Renderer::renderVictoryScreen(Game* game, int selectedOption) {
     drawText("Puntaje: " + std::to_string(player->score),
              panelX + 200, panelY + 230, Color::Yellow(), false);
 
-    std::vector<std::string> options = {"JUGAR DE NUEVO", "MENU PRINCIPAL"};
+    vector<std::string> options = {"JUGAR DE NUEVO", "MENU PRINCIPAL"};
     int startY = panelY + 280;
 
     for (size_t i = 0; i < options.size(); i++) {
@@ -653,15 +653,15 @@ void Renderer::renderGame(Game* game, float fps) {
             clear();
             drawGrid();
 
-            if (game->getConfig().showQuad) {
-                drawQuad(game->getCollisionSystem()->getQuad());
-            }
-
             const auto& entities = game->getEntities();
             for (auto entity : entities) {
                 if (entity->active && camera->isVisible(entity->position, entity->radius)) {
                     drawEntityTextured(entity);
                 }
+            }
+
+            if (game->getConfig().showQuad) {
+                drawQuad(game->getCollisionSystem()->getQuad());
             }
 
             renderHUD(game, fps);
@@ -793,7 +793,7 @@ void Renderer::renderEntity(GameEntity* entity) {
     float size = entity->radius * 2;
 
     if (entity->justAte) {
-        size += entity->pulseScale;
+        size *= entity->pulseScale;
         worldX -= (size - entity->radius * 2) / 2;
         worldY -= (size - entity->radius * 2) / 2;
     }

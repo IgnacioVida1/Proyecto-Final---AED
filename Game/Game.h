@@ -35,12 +35,12 @@ class Game {
     GameState currentState;
 
     Player* player;
-    std::vector<Bot*> bots;
-    std::vector<Pellet*> pellets;
-    std::vector<GameEntity*> allEntities;
+    vector<Bot*> bots;
+    vector<Pellet*> pellets;
+    vector<GameEntity*> allEntities;
 
-    std::vector<RespawnTimer> pelletsTimer;
-    std::vector<RespawnTimer> botsTimer;
+    vector<RespawnTimer> pelletsTimer;
+    vector<RespawnTimer> botsTimer;
 
     bool isRunning;
     int frameCount;
@@ -89,7 +89,7 @@ public:
 
     Camera* getCamera() const { return camera; }
 
-    const std::vector<GameEntity*>& getEntities() const { return allEntities; }
+    const vector<GameEntity*>& getEntities() const { return allEntities; }
 
     CollisionSystem* getCollisionSystem() { return collisionSystem; }
 

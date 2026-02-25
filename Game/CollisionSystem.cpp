@@ -18,7 +18,7 @@ CollisionSystem::~CollisionSystem() {
     delete quad;
 }
 
-void CollisionSystem::setActiveEntities(std::vector<GameEntity*>& entities) {
+void CollisionSystem::setActiveEntities(vector<GameEntity*>& entities) {
 
     activeEntitiesRef = &entities;
 }
@@ -79,12 +79,12 @@ void CollisionSystem::rebuildQuad() {
     stats.quadNodes = quad->countNodes();
 }
 
-std::vector<std::pair<GameEntity*, GameEntity*>> CollisionSystem::detectCollisions() {
+vector<pair<GameEntity*, GameEntity*>> CollisionSystem::detectCollisions() {
 
     collisions.clear();
 
     int totalCandidates = 0;
-    float avgCandidates = 0;
+    //float avgCandidates = 0;
     int entityCount = 0;
 
     for (auto e : *activeEntitiesRef) {
@@ -117,10 +117,10 @@ std::vector<std::pair<GameEntity*, GameEntity*>> CollisionSystem::detectCollisio
         }
     }
 
-    if (entityCount > 0) {
+    /*if (entityCount > 0) {
         avgCandidates = totalCandidates / (float)entityCount;
         // std::cout << "Promedio candidatos por entidad: " << avgCandidates << std::endl;
-    }
+    }*/
 
     stats.collisionsDetected = static_cast<int>(collisions.size());
 
@@ -137,17 +137,6 @@ bool CollisionSystem::checkCollisions(GameEntity *a, GameEntity *b) {
     return distSq < (minDist * minDist);
 }
 
-
-bool CollisionSystem::checkCollisionsCircle(GameEntity* a, GameEntity* b) {
-
-    float dx = a->position.x - b->position.x;
-    float dy = a->position.y - b->position.y;
-    float dist = dx * dx + dy * dy;
-    float minDist = a->radius + b->radius;
-
-    return dist < (minDist * minDist);
-}
-
 Rect CollisionSystem::createSearchArea(GameEntity* entity) {
 
     Rect bbox = entity->getBoundingBox();
@@ -160,7 +149,7 @@ Rect CollisionSystem::createSearchArea(GameEntity* entity) {
     );
 }
 
-void CollisionSystem::resolveCollisions(const std::vector<std::pair<GameEntity*, GameEntity*>>& collisions) {
+void CollisionSystem::resolveCollisions(const vector<pair<GameEntity*, GameEntity*>>& collisions) {
 
     for (const auto& c : collisions) {
         GameEntity* a = c.first;
@@ -173,14 +162,18 @@ void CollisionSystem::resolveCollisions(const std::vector<std::pair<GameEntity*,
         } else if (b->canEat(a)) {
             b->eat(a);
         } else {
+            // Distancia entre ambas entidades
             float dx = a->position.x - b->position.x;
             float dy = a->position.y - b->position.y;
             float dist = sqrt(dx*dx + dy*dy);
             if (dist > 0) {
+                // Distancia de solapamiento
                 float overlap = (a->radius + b->radius) - dist;
+                // Distancias normalizadas
                 float nx = dx / dist;
                 float ny = dy / dist;
 
+                // Se ponen las direcciones de rebote
                 if (a->type == EntityType::PLAYER || a->type == EntityType::BOT) {
                     a->position.x += nx * overlap * 0.5f;
                     a->position.y += ny * overlap * 0.5f;
@@ -193,11 +186,13 @@ void CollisionSystem::resolveCollisions(const std::vector<std::pair<GameEntity*,
                 float aMass = (a->type == EntityType::PELLET) ? PELLET_MASS_FACTOR : a->mass;
                 float bMass = (b->type == EntityType::PELLET) ? PELLET_MASS_FACTOR : b->mass;
 
+                // Se realiza el rebote a direcciones contrarias entre ls entidades
                 a->velX += nx * COLLISION_REBOUND_FORCE * (bMass / aMass);
                 a->velY += ny * COLLISION_REBOUND_FORCE * (bMass / aMass);
                 b->velX -= nx * COLLISION_REBOUND_FORCE * (aMass / bMass);
                 b->velY -= ny * COLLISION_REBOUND_FORCE * (aMass / bMass);
 
+                // Se limita la velocidad de las entidades
                 float aSpeed = sqrt(a->velX*a->velX + a->velY*a->velY);
                 if (aSpeed > a->maxSpeed * MAX_SPEED_MULTIPLIER_COLLISION) {
                     a->velX = (a->velX / aSpeed) * a->maxSpeed * 2;
@@ -217,16 +212,16 @@ void CollisionSystem::resolveCollisions(const std::vector<std::pair<GameEntity*,
     }
 }
 
-std::vector<GameEntity*> CollisionSystem::queryArea(const Rect& area) {
+vector<GameEntity*> CollisionSystem::queryArea(const Rect& area) {
 
-    std::vector<GameEntity*> results;
+    vector<GameEntity*> results;
 
     quad->queryRange(area, results);
 
     return results;
 }
 
-std::vector<GameEntity*> CollisionSystem::queryNearby(const Point& position, float radius) {
+vector<GameEntity*> CollisionSystem::queryNearby(const Point& position, float radius) {
 
     Rect area(position.x - radius, position.y - radius, radius * 2, radius * 2);
 

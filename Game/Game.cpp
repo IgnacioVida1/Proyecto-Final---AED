@@ -127,7 +127,6 @@ void Game::respawnPlayer() {
             float dist = sqrt(dx*dx + dy*dy);
             float minDist = bot->radius + PLAYER_BASE_RADIUS;
 
-            // No spawnear dentro de bots
             if (dist < minDist) {
                 safePosition = false;
                 break;
@@ -187,6 +186,14 @@ void Game::update(float deltatime) {
     switch (currentState) {
 
         case GameState::MENU_MAIN:
+            break;
+        case GameState::MENU_PAUSE:
+            break;
+        case GameState::MENU_OPTIONS:
+            break;
+        case GameState::LOSING:
+            break;
+        case GameState::VICTORY:
             break;
         case GameState::PLAYING: {
             updateEntities(deltatime);

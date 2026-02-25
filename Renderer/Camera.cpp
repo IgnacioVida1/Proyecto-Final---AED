@@ -57,11 +57,11 @@ void Camera::calculateZoom(float playerRadius) {
 
     const float IDEAL_PLAYER_SIZE_RATIO = CAMERA_IDEAL_PLAYER_SIZE_RATIO;
 
-    float desiredPlayerScreenSize = std::min(viewportWidth, viewportHeight) * IDEAL_PLAYER_SIZE_RATIO;
+    float desiredPlayerScreenSize = min(viewportWidth, viewportHeight) * IDEAL_PLAYER_SIZE_RATIO;
 
     float idealZoom = desiredPlayerScreenSize / (playerRadius * 2);
 
-    targetZoomLevel = std::max(minZoom, std::min(maxZoom, idealZoom));
+    targetZoomLevel = max(minZoom, minP(maxZoom, idealZoom));
 }
 
 void Camera::setPosition(const Point& newPos) {
@@ -73,29 +73,29 @@ void Camera::setPosition(const Point& newPos) {
 
 Point Camera::worldToScreen(const Point& worldPoint) const {
 
-    return Point(
+    return {
         (worldPoint.x - position.x) * zoomLevel + viewportWidth / 2.0f,
         (worldPoint.y - position.y) * zoomLevel + viewportHeight / 2.0f
-        );
+        };
 }
 
 Point Camera::screenToWorld(const Point& screenPoint) const {
-    return Point(
+    return {
         (screenPoint.x + position.x - viewportWidth/ 2.0f) / zoomLevel + position.x,
         (screenPoint.y + position.y - viewportHeight / 2.0f) / zoomLevel + position.y
-        );
+        };
 }
 
 Rect Camera::getViewRect() const {
 
     float viewWidth = viewportWidth / zoomLevel;
     float viewHeight = viewportHeight / zoomLevel;
-    return Rect(
+    return {
         position.x - viewWidth / 2.0f,
         position.y - viewHeight / 2.0f,
         viewWidth,
         viewHeight
-    );
+    };
 }
 
 bool Camera::isVisible(const Point& worldPoint, float margin) const {

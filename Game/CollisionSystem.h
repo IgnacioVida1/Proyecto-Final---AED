@@ -66,10 +66,10 @@ class CollisionSystem {
 
     std::chrono::high_resolution_clock::time_point lastTime;
 
-    std::vector<GameEntity*>* activeEntitiesRef;
+    vector<GameEntity*>* activeEntitiesRef;
 
-    std::vector<GameEntity*> candidates;
-    std::vector<std::pair<GameEntity*, GameEntity*>> collisions;
+    vector<GameEntity*> candidates;
+    vector<pair<GameEntity*, GameEntity*>> collisions;
 
     public:
 
@@ -77,13 +77,13 @@ class CollisionSystem {
 
     ~CollisionSystem();
 
-    void setActiveEntities(std::vector<GameEntity*>& entities);
+    void setActiveEntities(vector<GameEntity*>& entities);
 
     void update();
 
     void rebuildQuad();
 
-    std::vector<std::pair<GameEntity*, GameEntity*>> detectCollisions();
+    vector<pair<GameEntity*, GameEntity*>> detectCollisions();
 
     bool checkCollisions(GameEntity* a, GameEntity* b);
 
@@ -91,11 +91,11 @@ class CollisionSystem {
 
     Rect createSearchArea(GameEntity* entity);
 
-    void resolveCollisions(const std::vector<std::pair<GameEntity*, GameEntity*>>& collisions);
+    void resolveCollisions(const vector<pair<GameEntity*, GameEntity*>>& collisions);
 
-    std::vector<GameEntity*> queryArea(const Rect& area);
+    vector<GameEntity*> queryArea(const Rect& area);
 
-    std::vector<GameEntity*> queryNearby(const Point& position, float radius);
+    vector<GameEntity*> queryNearby(const Point& position, float radius);
     const PerformanceStats& getStats() const;
     const GameConfig& getConfig() const;
     Quad* getQuad() const;

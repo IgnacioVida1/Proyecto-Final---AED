@@ -5,7 +5,6 @@
 #include "Quad.h"
 #include "../Entity/Entities.h"
 #include <iostream>
-#include <algorithm>
 
 Quad::~Quad() {
     clear();
@@ -36,7 +35,7 @@ void Quad::updateEntity(GameEntity* e) {
 
 void Quad::removeEntity(GameEntity* e) {
 
-    auto it = std::find(entities.begin(), entities.end(), e);
+    auto it = find(entities, e);
     if (it != entities.end()) {
 
         entities.erase(it);
@@ -70,7 +69,7 @@ void Quad::subdivide() {
 
     subdivided = true;
 
-    std::vector<GameEntity*> temp = entities;
+    vector<GameEntity*> temp = entities;
     entities.clear();
 
     for (auto entity : temp) {
@@ -135,7 +134,7 @@ bool Quad::insert(GameEntity* e) {
     return inserted;
 }
 
-void Quad::queryRange(const Rect& range, std::vector<GameEntity*>& result) {
+void Quad::queryRange(const Rect& range, vector<GameEntity*>& result) {
 
     if ( !bounds.intersects(range) ) { return; }
 
@@ -153,7 +152,7 @@ void Quad::queryRange(const Rect& range, std::vector<GameEntity*>& result) {
     }
 }
 
-void Quad::queryPoint(const Point& point, std::vector<GameEntity*>& result) {
+void Quad::queryPoint(const Point& point, vector<GameEntity*>& result) {
 
     if ( !bounds.contains(point) ) { return; }
 
@@ -174,7 +173,7 @@ void Quad::queryPoint(const Point& point, std::vector<GameEntity*>& result) {
     }
 }
 
-void Quad::getAllEntities(std::vector<GameEntity*>& allEntities) {
+void Quad::getAllEntities(vector<GameEntity*>& allEntities) {
 
     for (auto e : entities) {
         if ( e->active ) { allEntities.push_back(e); }
@@ -204,7 +203,7 @@ void Quad::draw() {
 const Rect& Quad::getBounds() const { return bounds; }
 int Quad::getLevel() const { return level; }
 bool Quad::isSubdivided() const { return subdivided; }
-int Quad::getEntityCount() const { return entities.size(); }
+size_t Quad::getEntityCount() const { return entities.size(); }
 
 int Quad::countNodes() const {
 

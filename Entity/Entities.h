@@ -7,11 +7,11 @@
 
 #include "Entity.h"
 #include <string>
-#include <vector>
 
 class CollisionSystem;
 struct Color;
 
+// Tipos de entidades
 enum class EntityType {
 
     PLAYER,
@@ -19,6 +19,7 @@ enum class EntityType {
     PELLET,
 };
 
+// Estados de BOT
 enum class BotState {
 
     WANDER,
@@ -27,18 +28,20 @@ enum class BotState {
     SEEK_FOOD
 };
 
+// Entidad dentro del juego
 class GameEntity : public Entity {
 
 protected:
-    float baseRadius = 10.0f;
+    float baseRadius = 10.0f; // Radio base
 
-    Point targetPosition = Point(0, 0);
-    bool hasTarget = false;
+    Point targetPosition = Point(0, 0); // Posicion de objetivo
+    bool hasTarget = false; // Tiene objetivo?
 
     public:
-    EntityType type;
+    EntityType type; // Tipo de entidad
     std::string name;
 
+    // Stats clave
     float mass = 1.0f;
     float velX = 0.0f;
     float velY = 0.0f;
@@ -50,18 +53,25 @@ protected:
 
     GameEntity(EntityType t, const std::string &n = "");
 
+    // Actualizar entidad por frame
     virtual void update(float deltatime);
 
+    // Actualizar animacion de la entidad por frame
     void updateAnimations(float deltatime);
 
+    // Moverse en direccion a un objetivo
     void moveTowards(const Point& target, float speedMultiplier = 1.0f);
 
+    // Se puede comer?
     bool canEat(const GameEntity* other) const;
 
+    // Accion de comer
     void eat(GameEntity* other);
 
-    virtual std::pair<Color, Color> getColor() const;
+    // Obtener colores
+    virtual pair<Color, Color> getColor() const;
 
+    // Obtener tipo
     EntityType getType() const { return type; }
 };
 
@@ -74,6 +84,7 @@ class Player : public GameEntity {
     void update(float deltatime) override;
 };
 
+// Entidad con prioridad para bots
 struct PriorityTarget {
     GameEntity* entity;
     float priority;
@@ -93,16 +104,17 @@ struct PriorityTarget {
 
 class Bot : public GameEntity {
 
-    CollisionSystem* collisionSystem;
+    CollisionSystem* collisionSystem; // Sistema de colisiones
 
-    BotState state;
-    GameEntity* targetEntity;
+    BotState state; // Estado de bot
+    GameEntity* targetEntity; // Objetivo
 
     float decisionTimer = 0.0f;
     float decisionInterval = 2.0f;
 
     Point fleeTarget;
 
+    // Constantes para vision
     const float VIEW_RADIUS = BOT_VIEW_RADIUS;
     const float FLEE_RADIUS = BOT_FLEE_RADIUS;
     const float CHASE_RADIUS = BOT_CHASE_RADIUS;
@@ -111,19 +123,21 @@ class Bot : public GameEntity {
     public:
     Bot(int id);
 
-    void update(float deltatime, const std::vector<GameEntity*>& allEntities, GameEntity* player);
+    void update(float deltatime, const vector<GameEntity*>& allEntities, GameEntity* player);
 
-    void analyzeEnvironment(const std::vector<GameEntity*>& allEntities, GameEntity* player);
+    // Analizar alrededores
+    void analyzeEnvironment(const vector<GameEntity*>& allEntities, GameEntity* player);
 
+    // Actuar segun ambiente
     void executeBehavior(float deltatime);
 
+    // Escoger nuevo objetivo
     void chooseNewTarget();
-
     BotState getState() const { return state; }
     void setState(BotState newState) { state = newState; }
     void setCollisionSystem(CollisionSystem* cs) { collisionSystem = cs; }
 
-    std::pair<Color, Color> getColor() const override;
+    pair<Color, Color> getColor() const override;
 };
 
 class Pellet : public GameEntity {
@@ -133,7 +147,7 @@ class Pellet : public GameEntity {
 
     void update(float deltatime) override;
 
-    std::pair<Color, Color> getColor() const override;
+    pair<Color, Color> getColor() const override;
 };
 
 #endif //ENTITIES_H

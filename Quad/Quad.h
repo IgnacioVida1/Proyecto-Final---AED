@@ -5,8 +5,6 @@
 #ifndef QUAD_H
 #define QUAD_H
 
-#include <vector>
-
 #include "Rect.h"
 
 struct GameEntity;
@@ -17,7 +15,7 @@ public:
     Rect bounds;
     int capacity;
     int level;
-    std::vector<GameEntity*> entities;
+    vector<GameEntity*> entities;
 
     Quad* TopLeft;
     Quad* TopRight;
@@ -42,18 +40,18 @@ public:
 
     bool insert(GameEntity* e);
 
-    void queryRange(const Rect& range, std::vector<GameEntity*>& result);
+    void queryRange(const Rect& range, vector<GameEntity*>& result);
 
-    void queryPoint(const Point& point, std::vector<GameEntity*>& result);
+    void queryPoint(const Point& point, vector<GameEntity*>& result);
 
-    void getAllEntities(std::vector<GameEntity*>& allEntities);
+    void getAllEntities(vector<GameEntity*>& allEntities);
 
     void draw();
 
     const Rect& getBounds() const;
     int getLevel() const;
     bool isSubdivided() const;
-    int getEntityCount() const;
+    size_t getEntityCount() const;
 
     int countNodes() const;
 };

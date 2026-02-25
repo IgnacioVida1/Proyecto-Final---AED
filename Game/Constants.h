@@ -4,6 +4,7 @@
 
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
+#include <stdexcept>
 
 // Tamaño de mundo
 constexpr float WORLD_WIDTH = 2000.0f;
@@ -106,6 +107,255 @@ constexpr float VICTORY_RADIUS = (WORLD_WIDTH * VICTORY_SIZE_RATIO) / 2.0f;
 
 constexpr float TEXTURE_BASE_SIZE = 64.0f;
 constexpr float TEXTURE_BASE_RADIUS = 32.0f;
+
+
+template <typename T>
+class vector {
+private:
+    T* datos;           // Puntero a los datos
+    size_t capacidad;   // Capacidad total
+    size_t longitud;    // Número actual de elementos
+
+    // Redimensionar cuando sea necesario
+    void redimensionar() {
+        size_t nuevaCapacidad = (capacidad == 0) ? 1 : capacidad * 2;
+
+        T* nuevosDatos = static_cast<T*>(operator new[](nuevaCapacidad * sizeof(T)));
+
+        for (size_t i = 0; i < longitud; i++) {
+            new (&nuevosDatos[i]) T(std::move(datos[i]));
+            datos[i].~T();
+        }
+
+        operator delete[](datos);
+
+        datos = nuevosDatos;
+        capacidad = nuevaCapacidad;
+    }
+
+
+public:
+
+    using iterator = T*;
+    using const_iterator = const T*;
+
+    // Iteradores
+    iterator begin() { return datos; }
+    iterator end() { return datos + longitud; }
+    const_iterator begin() const { return datos; }
+    const_iterator end() const { return datos + longitud; }
+
+    // Constructor
+    vector() : datos(nullptr), capacidad(0), longitud(0) {}
+
+    // Destructor
+    ~vector() {
+        delete[] datos;
+    }
+
+    // Constructor de copia
+    vector(const vector& otro) {
+        capacidad = otro.capacidad;
+        longitud = otro.longitud;
+        datos = new T[capacidad];
+        for (size_t i = 0; i < longitud; i++) {
+            datos[i] = otro.datos[i];
+        }
+    }
+
+    // Constructor con lista
+    vector(std::initializer_list<T> lista)
+        : datos(nullptr), capacidad(0), longitud(0) {
+
+        reserve(lista.size());
+
+        for (const auto& elemento : lista) {
+            push_back(elemento);
+        }
+    }
+
+    // Operador de asignación
+    vector& operator=(const vector& otro) {
+        if (this != &otro) {
+            delete[] datos;
+            capacidad = otro.capacidad;
+            longitud = otro.longitud;
+            datos = new T[capacidad];
+            for (size_t i = 0; i < longitud; i++) {
+                datos[i] = otro.datos[i];
+            }
+        }
+        return *this;
+    }
+
+    // Añadir elemento al final
+    void push_back(const T& valor) {
+        if (longitud >= capacidad) {
+            redimensionar();
+        }
+        datos[longitud++] = valor;
+    }
+
+    // Construccion directamente en el vector
+    template <typename... Args>
+    T& emplace_back(Args&&... args) {
+        if (longitud >= capacidad) {
+            redimensionar();
+        }
+
+        new (&datos[longitud]) T(std::forward<Args>(args)...);
+
+        return datos[longitud++];
+    }
+
+    // Eliminar último elemento
+    void pop_back() {
+        if (longitud > 0) {
+            longitud--;
+        }
+    }
+
+    // Borrar elemento especifico
+    iterator erase(iterator pos) {
+        size_t indice = pos - datos;
+
+        for (size_t i = indice; i < longitud - 1; i++) {
+            datos[i] = datos[i + 1];
+        }
+
+        longitud--;
+        return datos + indice;
+    }
+
+    // Reservar capacidad
+    void reserve(size_t nuevaCapacidad) {
+        if (nuevaCapacidad > capacidad) {
+            T* nuevosDatos = new T[nuevaCapacidad];
+            for (size_t i = 0; i < longitud; i++) {
+                nuevosDatos[i] = datos[i];
+            }
+            delete[] datos;
+            datos = nuevosDatos;
+            capacidad = nuevaCapacidad;
+        }
+    }
+
+    // Acceso por índice
+    T& operator[](size_t indice) {
+        return datos[indice];
+    }
+
+    const T& operator[](size_t indice) const {
+        return datos[indice];
+    }
+
+    // Tamaño actual
+    size_t size() const {
+        return longitud;
+    }
+
+    // Capacidad actual
+    size_t capacity() const {
+        return capacidad;
+    }
+
+    // ¿Está vacío?
+    bool empty() const {
+        return longitud == 0;
+    }
+
+    // Limpiar vector
+    void clear() {
+        longitud = 0;
+    }
+};
+
+template <typename T1, typename T2>
+struct pair {
+    // Atributos públicos (como en std::pair)
+    T1 first;
+    T2 second;
+
+    // Constructores
+    pair() : first(T1()), second(T2()) {}
+
+    pair(const T1& a, const T2& b) : first(a), second(b) {}
+
+    pair(const pair& otro) : first(otro.first), second(otro.second) {}
+
+    // Asignación
+    pair& operator=(const pair& otro) {
+        if (this != &otro) {
+            first = otro.first;
+            second = otro.second;
+        }
+        return *this;
+    }
+};
+
+// Ordenar elementos
+template <typename Iterator, typename Comparator>
+void sort(Iterator begin, Iterator end, Comparator comp) {
+    if (begin >= end || begin + 1 >= end) return;
+
+    // QuickSort con pivote al final
+    Iterator pivot = end - 1;
+    Iterator i = begin;
+
+    for (Iterator j = begin; j < pivot; ++j) {
+        if (comp(*j, *pivot)) {
+            std::swap(*i, *j);
+            ++i;
+        }
+    }
+    std::swap(*i, *pivot);
+
+    // Recursión
+    sort(begin, i, comp);
+    sort(i + 1, end, comp);
+}
+
+// Find
+template <typename T>
+typename vector<T>::iterator find(vector<T>& vec, const T& valor) {
+    for (auto it = vec.begin(); it != vec.end(); ++it) {
+        if (*it == valor) {
+            return it;
+        }
+    }
+    return vec.end();
+}
+
+// Find constante
+template <typename T>
+typename vector<T>::const_iterator find(const vector<T>& vec, const T& valor) {
+    for (auto it = vec.begin(); it != vec.end(); ++it) {
+        if (*it == valor) {
+            return it;
+        }
+    }
+    return vec.end();
+}
+
+template <typename T>
+T min(T& a, T& b) {
+    return a < b ? a : b;
+}
+
+template <typename T>
+T &minP(T& a, T& b) {
+    return a < b ? a : b;
+}
+
+template <typename T>
+T max(T& a, T& b) {
+    return a > b ? a : b;
+}
+
+template <typename T>
+T &maxP(T& a, T& b) {
+    return a > b ? a : b;
+}
 
 #endif //CONSTANTS_H
 
