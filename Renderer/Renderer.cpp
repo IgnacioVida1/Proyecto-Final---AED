@@ -50,9 +50,9 @@ bool Renderer::init() {
         std::cout << "ADVERTENCIA: No se pudo cargar fuente pequeña" << std::endl;
     }
 
-    playerTexture = loadTexture("../Renderer/entity.png");
-    botTexture = loadTexture("../Renderer/entity.png");
-    pelletTexture = loadTexture("../Renderer/entity.png");
+    playerTexture = loadTexture("../assets/entity.png");
+    botTexture = loadTexture("../assets/entity.png");
+    pelletTexture = loadTexture("../assets/entity.png");
 
     if (!playerTexture || !botTexture || !pelletTexture) {
         std::cout << "ADVERTENCIA: No se pudieron cargar todas las texturas" << std::endl;

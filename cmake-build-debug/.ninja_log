@@ -21,3 +21,6 @@
 383	6629	7937146933183109	CMakeFiles/Proyecto_AED.dir/Entity/Entities.cpp.obj	e6575fcdff7fc0f7
 390	6897	7937146933260491	CMakeFiles/Proyecto_AED.dir/Renderer/Renderer.cpp.obj	777ecb77558b1510
 6897	9230	7937146998324815	Proyecto_AED.exe	e5f138757ee74b37
+66	2238	7937304946684617	CMakeFiles/Proyecto_AED.dir/Game/CollisionSystem.cpp.obj	72e0a50d33b36b9a
+73	2742	7937304946744627	CMakeFiles/Proyecto_AED.dir/Entity/Entities.cpp.obj	e6575fcdff7fc0f7
+2742	3084	7937304973441476	Proyecto_AED.exe	e5f138757ee74b37
